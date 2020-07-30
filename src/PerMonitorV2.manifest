@@ -22,4 +22,22 @@
             <supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}"/>
         </application>
     </compatibility>
+
+    <!-- Disable UAC file virtualization -->
+    <trustInfo xmlns="urn:schemas-microsoft-com:asm.v3">
+        <security>
+            <requestedPrivileges>
+                <!--
+                  UAC settings:
+                  - app should run at same integrity level as calling process
+                  - app does not need to manipulate windows belonging to
+                    higher-integrity-level processes
+                  -->
+                <requestedExecutionLevel
+                    level="asInvoker"
+                    uiAccess="false"
+                />
+            </requestedPrivileges>
+        </security>
+    </trustInfo>
 </assembly>
