@@ -1,0 +1,23 @@
+//
+// Wizard-2020 Example from https://building.enlyze.com/posts/writing-win32-api-like-its-2020-part-1
+// Copyright (c) 2020 Colin Finck, ENLYZE GmbH
+// SPDX-License-Identifier: MIT
+//
+
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+STRINGTABLE
+BEGIN
+    IDS_BACK                        "< Back"
+    IDS_NEXT                        "Next >"
+    IDS_CANCEL                      "Cancel"
+
+    IDS_FIRSTPAGE_HEADER            "First Page"
+    IDS_FIRSTPAGE_SUBHEADER         "This is the first page."
+    IDS_FIRSTPAGE_TEXT              "Lorem ipsum dolor amet bitters food truck sustainable authentic microdosing tilde four dollar toast selvage 3 wolf moon fixie literally shaman put a bird on it lyft. Vaporware poke bushwick glossier everyday carry man braid butcher iceland chambray etsy af godard. Locavore pabst YOLO trust fund knausgaard bespoke viral gastropub. Hell of cloud bread flexitarian banh mi, photo booth biodiesel man braid keffiyeh fam put a bird on it pitchfork forage vinyl kombucha. Chambray raw denim taxidermy everyday carry four dollar toast squid salvia tattooed gluten-free vegan brunch typewriter. Keytar letterpress prism kickstarter chicharrones kitsch."
+
+    IDS_SECONDPAGE_HEADER           "Second Page"
+    IDS_SECONDPAGE_SUBHEADER        "This is the second page, who would have thought?"
+    IDS_COLUMN1                     "Column 1"
+    IDS_COLUMN2                     "Column 2"
+END

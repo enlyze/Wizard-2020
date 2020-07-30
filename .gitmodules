@@ -1,0 +1,3 @@
+[submodule "src/scope-guard"]
+	path = src/scope-guard
+	url = https://github.com/offa/scope-guard
