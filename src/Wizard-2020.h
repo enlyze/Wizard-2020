@@ -28,7 +28,6 @@
 #include "win32_wrappers.h"
 
 #include "resource.h"
-#include "string.h"
 #include "utils.h"
 
 // Forward declarations
