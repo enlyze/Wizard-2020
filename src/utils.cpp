@@ -104,34 +104,26 @@ LoadPNGAsGdiplusBitmap(HINSTANCE hInstance, UINT uID)
 }
 
 HMODULE
-SafeLoadSystemLibrary(const std::wstring& LibraryName)
+SafeLoadSystemLibrary(const std::wstring& wstrLibraryFile)
 {
-    // LOAD_LIBRARY_SEARCH_SYSTEM32 is only supported if KB2533623 is installed on Vista / Win7, and starting from Win8
-    FARPROC pSetDefaultDllDirectories = ::GetProcAddress(::GetModuleHandleW(L"kernel32.dll"), "SetDefaultDllDirectories");
+    // LOAD_LIBRARY_SEARCH_SYSTEM32 is only supported if KB2533623 is installed on Vista / Win7, and starting from Win8.
+    // This update also adds SetDefaultDllDirectories, so we can query that API to check for KB2533623.
+    FARPROC pSetDefaultDllDirectories = GetProcAddress(GetModuleHandleW(L"kernel32"), "SetDefaultDllDirectories");
     if (pSetDefaultDllDirectories)
     {
-        return ::LoadLibraryExW(LibraryName.c_str(), NULL, LOAD_LIBRARY_SEARCH_SYSTEM32);
+        return LoadLibraryExW(wstrLibraryFile.c_str(), nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
     }
 
-    // We have to do this manually, so first ask how big our buffer needs to be (including null terminator)
-    UINT len = GetSystemDirectoryW(NULL, 0);
-    std::wstring FullPath(len, L'\0');
-
-    // Now fill the buffer, and query the result (excluding null terminator!)
-    len = ::GetSystemDirectoryW(FullPath.data(), FullPath.size());
-    if (len == 0 || len >= FullPath.size())
+    // LOAD_LIBRARY_SEARCH_SYSTEM32 is not supported, so use the next best LOAD_WITH_ALTERED_SEARCH_PATH instead.
+    std::wstring wstrLibraryFilePath(MAX_PATH, L'\0');
+    UINT cch = GetSystemDirectoryW(wstrLibraryFilePath.data(), wstrLibraryFilePath.size());
+    if (cch == 0 || cch >= wstrLibraryFilePath.size())
     {
-        return NULL;
+        return nullptr;
     }
 
-    // Clean up the null terminator
-    FullPath.resize(len);
+    wstrLibraryFilePath.resize(cch);
+    wstrLibraryFilePath += L"\\" + wstrLibraryFile;
 
-    // Ensure our path ends with a slash
-    if (FullPath[len-1] != L'\\' && FullPath[len-1] != L'/')
-        FullPath += L'\\';
-
-    FullPath += LibraryName;
-
-    return ::LoadLibraryExW(FullPath.data(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
+    return LoadLibraryExW(wstrLibraryFilePath.data(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
 }
