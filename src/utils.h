@@ -34,3 +34,4 @@ InstanceFromWndProc(HWND hWnd, UINT uMsg, LPARAM lParam)
 WORD GetWindowDPI(HWND hWnd);
 std::wstring LoadStringAsWstr(HINSTANCE hInstance, UINT uID);
 std::unique_ptr<Gdiplus::Bitmap> LoadPNGAsGdiplusBitmap(HINSTANCE hInstance, UINT uID);
+HMODULE SafeLoadSystemLibrary(const std::wstring& LibraryName);

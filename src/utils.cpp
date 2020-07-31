@@ -8,13 +8,16 @@
 
 typedef HRESULT (WINAPI *PGetDpiForMonitor)(HMONITOR hmonitor, int dpiType, UINT* dpiX, UINT* dpiY);
 
+#ifndef LOAD_LIBRARY_SEARCH_SYSTEM32
+#define LOAD_LIBRARY_SEARCH_SYSTEM32            0x00000800
+#endif
 
 WORD
 GetWindowDPI(HWND hWnd)
 {
     // Try to get the DPI setting for the monitor where the given window is located.
     // This API is Windows 8.1+.
-    HMODULE hShcore = LoadLibraryW(L"shcore");
+    HMODULE hShcore = SafeLoadSystemLibrary(L"shcore.dll");
     if (hShcore)
     {
         PGetDpiForMonitor pGetDpiForMonitor = reinterpret_cast<PGetDpiForMonitor>(GetProcAddress(hShcore, "GetDpiForMonitor"));
@@ -98,4 +101,29 @@ LoadPNGAsGdiplusBitmap(HINSTANCE hInstance, UINT uID)
     }
 
     return pBitmap;
+}
+
+HMODULE
+SafeLoadSystemLibrary(const std::wstring& wstrLibraryFile)
+{
+    // LOAD_LIBRARY_SEARCH_SYSTEM32 is only supported if KB2533623 is installed on Vista / Win7, and starting from Win8.
+    // This update also adds SetDefaultDllDirectories, so we can query that API to check for KB2533623.
+    FARPROC pSetDefaultDllDirectories = GetProcAddress(GetModuleHandleW(L"kernel32"), "SetDefaultDllDirectories");
+    if (pSetDefaultDllDirectories)
+    {
+        return LoadLibraryExW(wstrLibraryFile.c_str(), nullptr, LOAD_LIBRARY_SEARCH_SYSTEM32);
+    }
+
+    // LOAD_LIBRARY_SEARCH_SYSTEM32 is not supported, so use the next best LOAD_WITH_ALTERED_SEARCH_PATH instead.
+    std::wstring wstrLibraryFilePath(MAX_PATH, L'\0');
+    UINT cch = GetSystemDirectoryW(wstrLibraryFilePath.data(), wstrLibraryFilePath.size());
+    if (cch == 0 || cch >= wstrLibraryFilePath.size())
+    {
+        return nullptr;
+    }
+
+    wstrLibraryFilePath.resize(cch);
+    wstrLibraryFilePath += L"\\" + wstrLibraryFile;
+
+    return LoadLibraryExW(wstrLibraryFilePath.data(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
 }
