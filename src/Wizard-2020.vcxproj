@@ -127,6 +127,7 @@
     <ResourceCompile Include="Wizard-2020.rc" />
   </ItemGroup>
   <ItemGroup>
+    <Manifest Include="Compatibility.manifest" />
     <Manifest Include="PerMonitorV2.manifest" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -71,5 +71,8 @@
     <Manifest Include="PerMonitorV2.manifest">
       <Filter>Resource Files</Filter>
     </Manifest>
+    <Manifest Include="Compatibility.manifest">
+      <Filter>Resource Files</Filter>
+    </Manifest>
   </ItemGroup>
 </Project>
