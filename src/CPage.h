@@ -27,6 +27,7 @@ protected:
         wc.lpfnWndProc = T::_WndProc;
         wc.hInstance = pMainWindow->GetHInstance();
         wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
+        wc.hbrBackground = GetSysColorBrush(COLOR_BTNFACE);
         wc.lpszClassName = T::_wszWndClass;
         if (RegisterClassW(&wc) == 0)
         {
