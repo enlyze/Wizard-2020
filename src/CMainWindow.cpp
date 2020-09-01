@@ -321,6 +321,7 @@ CMainWindow::Create(HINSTANCE hInstance, int nShowCmd)
     wc.hInstance = hInstance;
     wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
     wc.hIcon = LoadIconW(hInstance, MAKEINTRESOURCEW(IDI_ICON));
+    wc.hbrBackground = GetSysColorBrush(COLOR_BTNFACE);
     wc.lpszClassName = CMainWindow::_wszWndClass;
 
     if (RegisterClassW(&wc) == 0)
