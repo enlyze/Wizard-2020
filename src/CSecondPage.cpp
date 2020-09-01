@@ -41,12 +41,20 @@ CSecondPage::_OnSize()
 
     // Move the list control.
     HDWP hDwp = BeginDeferWindowPos(1);
+    if (!hDwp)
+    {
+        return 0;
+    }
 
     int iListX = 0;
     int iListY = 0;
     int iListHeight = rcWindow.bottom;
     int iListWidth = rcWindow.right;
-    DeferWindowPos(hDwp, m_hList, nullptr, iListX, iListY, iListWidth, iListHeight, 0);
+    hDwp = DeferWindowPos(hDwp, m_hList, nullptr, iListX, iListY, iListWidth, iListHeight, 0);
+    if (!hDwp)
+    {
+        return 0;
+    }
 
     EndDeferWindowPos(hDwp);
 
