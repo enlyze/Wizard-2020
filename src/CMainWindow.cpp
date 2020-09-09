@@ -255,6 +255,25 @@ CMainWindow::_OnPaint()
     return 0;
 }
 
+int
+CMainWindow::DefaultControlPaddingPx() const
+{
+    return MulDiv(10, m_wCurrentDPI, iWindowsReferenceDPI);
+}
+
+int
+CMainWindow::DefaultButtonHeightPx() const
+{
+    return MulDiv(23, m_wCurrentDPI, iWindowsReferenceDPI);
+}
+
+int
+CMainWindow::DefaultButtonWidthPx() const
+{
+    return MulDiv(90, m_wCurrentDPI, iWindowsReferenceDPI);
+}
+
+
 LRESULT
 CMainWindow::_OnSize()
 {
@@ -274,9 +293,9 @@ CMainWindow::_OnSize()
         return 0;
     }
 
-    const int iControlPadding = MulDiv(10, m_wCurrentDPI, iWindowsReferenceDPI);
-    int iButtonHeight = MulDiv(23, m_wCurrentDPI, iWindowsReferenceDPI);
-    int iButtonWidth = MulDiv(90, m_wCurrentDPI, iWindowsReferenceDPI);
+    const int iControlPadding = DefaultControlPaddingPx();
+    const int iButtonHeight = DefaultButtonHeightPx();
+    const int iButtonWidth = DefaultButtonWidthPx();
     int iButtonX = rcWindow.right - iControlPadding - iButtonWidth;
     int iButtonY = rcWindow.bottom - iControlPadding - iButtonHeight;
     hDwp = DeferWindowPos(hDwp, m_hCancel, nullptr, iButtonX, iButtonY, iButtonWidth, iButtonHeight, 0);
