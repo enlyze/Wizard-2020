@@ -14,10 +14,6 @@ public:
     HINSTANCE GetHInstance() const { return m_hInstance; }
     HWND GetHwnd() const { return m_hWnd; }
 
-    int DefaultControlPaddingPx() const;
-    int DefaultButtonHeightPx() const;
-    int DefaultButtonWidthPx() const;
-
     static std::unique_ptr<CMainWindow> Create(HINSTANCE hInstance, int nShowCmd);
     void EnableBackButton(BOOL bEnable);
     void EnableNextButton(BOOL bEnable);

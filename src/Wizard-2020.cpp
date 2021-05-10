@@ -9,6 +9,10 @@
 const int iFontReferenceDPI = 72;
 const int iWindowsReferenceDPI = 96;
 
+const int iUnifiedControlPadding = 10;
+const int iUnifiedButtonHeight = 23;
+const int iUnifiedButtonWidth = 90;
+
 // This could be turned into a constexpr std::wstring once C++20 support has landed.
 const WCHAR wszAppName[] = L"Wizard-2020 - Colin Finck, ENLYZE GmbH";
 
