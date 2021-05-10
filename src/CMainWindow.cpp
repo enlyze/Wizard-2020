@@ -440,7 +440,7 @@ CMainWindow::WorkLoop()
         if (bRet > 0)
         {
             TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            DispatchMessageW(&msg);
         }
         else if (bRet == 0)
         {
