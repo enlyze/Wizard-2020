@@ -6,6 +6,11 @@
 
 #pragma once
 
+static inline auto make_unique_font(HFONT hFont)
+{
+    return sr::make_unique_resource_checked(hFont, nullptr, DeleteObject);
+}
+
 static inline auto make_unique_handle(HANDLE h)
 {
     return sr::make_unique_resource_checked(h, INVALID_HANDLE_VALUE, CloseHandle);

@@ -10,7 +10,7 @@ class CMainWindow
 {
 public:
     WORD GetCurrentDPI() const { return m_wCurrentDPI; }
-    HFONT GetGuiFont() const { return m_hGuiFont; }
+    HFONT GetGuiFont() const { return m_hGuiFont.get(); }
     HINSTANCE GetHInstance() const { return m_hInstance; }
     HWND GetHwnd() const { return m_hWnd; }
 
@@ -23,8 +23,8 @@ public:
 private:
     static constexpr WCHAR _wszWndClass[] = L"MainWndClass";
 
-    HFONT m_hBoldGuiFont;
-    HFONT m_hGuiFont;
+    sr::unique_resource<HFONT, decltype(DeleteObject)*> m_hBoldGuiFont;
+    sr::unique_resource<HFONT, decltype(DeleteObject)*> m_hGuiFont;
     HINSTANCE m_hInstance;
     HWND m_hWnd;
     HWND m_hLine;

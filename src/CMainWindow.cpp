@@ -97,12 +97,12 @@ CMainWindow::_OnCreate()
     m_lfGuiFont = { 0 };
     wcscpy_s(m_lfGuiFont.lfFaceName, L"MS Shell Dlg 2");
     m_lfGuiFont.lfHeight = -MulDiv(10, m_wCurrentDPI, iFontReferenceDPI);
-    m_hGuiFont = CreateFontIndirectW(&m_lfGuiFont);
+    m_hGuiFont = make_unique_font(CreateFontIndirectW(&m_lfGuiFont));
 
     // Create the bold GUI font.
     m_lfBoldGuiFont = m_lfGuiFont;
     m_lfBoldGuiFont.lfWeight = FW_BOLD;
-    m_hBoldGuiFont = CreateFontIndirectW(&m_lfBoldGuiFont);
+    m_hBoldGuiFont = make_unique_font(CreateFontIndirectW(&m_lfBoldGuiFont));
 
     // Create the line above the buttons.
     m_hLine = CreateWindowExW(0, WC_STATICW, L"", WS_CHILD | WS_VISIBLE | SS_SUNKEN, 0, 0, 0, 0, m_hWnd, nullptr, nullptr, nullptr);
@@ -110,15 +110,15 @@ CMainWindow::_OnCreate()
     // Create the bottom buttons.
     std::wstring wstrBack = LoadStringAsWstr(m_hInstance, IDS_BACK);
     m_hBack = CreateWindowExW(0, WC_BUTTONW, wstrBack.c_str(), WS_CHILD | WS_VISIBLE | WS_DISABLED, 0, 0, 0, 0, m_hWnd, reinterpret_cast<HMENU>(IDC_BACK), nullptr, nullptr);
-    SendMessageW(m_hBack, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont), MAKELPARAM(TRUE, 0));
+    SendMessageW(m_hBack, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont.get()), MAKELPARAM(TRUE, 0));
 
     std::wstring wstrNext = LoadStringAsWstr(m_hInstance, IDS_NEXT);
     m_hNext = CreateWindowExW(0, WC_BUTTONW, wstrNext.c_str(), WS_CHILD | WS_VISIBLE | WS_DISABLED, 0, 0, 0, 0, m_hWnd, reinterpret_cast<HMENU>(IDC_NEXT), nullptr, nullptr);
-    SendMessageW(m_hNext, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont), MAKELPARAM(TRUE, 0));
+    SendMessageW(m_hNext, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont.get()), MAKELPARAM(TRUE, 0));
 
     std::wstring wstrCancel = LoadStringAsWstr(m_hInstance, IDS_CANCEL);
     m_hCancel = CreateWindowExW(0, WC_BUTTONW, wstrCancel.c_str(), WS_CHILD | WS_VISIBLE, 0, 0, 0, 0, m_hWnd, reinterpret_cast<HMENU>(IDC_CANCEL), nullptr, nullptr);
-    SendMessageW(m_hCancel, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont), MAKELPARAM(TRUE, 0));
+    SendMessageW(m_hCancel, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont.get()), MAKELPARAM(TRUE, 0));
 
     // Create all pages.
     m_pFirstPage = CFirstPage::Create(this);
@@ -154,23 +154,17 @@ CMainWindow::_OnDpiChanged(WPARAM wParam, LPARAM lParam)
     InvalidateRect(m_hWnd, &rcWindow, FALSE);
 
     // Recalculate the main GUI font.
-    LOGFONTW lfNewGuiFont = m_lfGuiFont;
-    lfNewGuiFont.lfHeight = -MulDiv(10, m_wCurrentDPI, iFontReferenceDPI);
-    HFONT hNewGuiFont = CreateFontIndirectW(&lfNewGuiFont);
-    DeleteObject(m_hGuiFont);
-    m_hGuiFont = hNewGuiFont;
+    m_lfGuiFont.lfHeight = -MulDiv(10, m_wCurrentDPI, iFontReferenceDPI);
+    m_hGuiFont = make_unique_font(CreateFontIndirectW(&m_lfGuiFont));
 
     // Recalculate the bold GUI font.
-    LOGFONTW lfNewBoldGuiFont = m_lfBoldGuiFont;
-    lfNewBoldGuiFont.lfHeight = lfNewGuiFont.lfHeight;
-    HFONT hNewBoldGuiFont = CreateFontIndirectW(&lfNewBoldGuiFont);
-    DeleteObject(m_hBoldGuiFont);
-    m_hBoldGuiFont = hNewBoldGuiFont;
+    m_lfBoldGuiFont.lfHeight = m_lfGuiFont.lfHeight;
+    m_hBoldGuiFont = make_unique_font(CreateFontIndirectW(&m_lfBoldGuiFont));
 
     // Update the control fonts.
-    SendMessageW(m_hBack, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont), MAKELPARAM(TRUE, 0));
-    SendMessageW(m_hNext, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont), MAKELPARAM(TRUE, 0));
-    SendMessageW(m_hCancel, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont), MAKELPARAM(TRUE, 0));
+    SendMessageW(m_hBack, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont.get()), MAKELPARAM(TRUE, 0));
+    SendMessageW(m_hNext, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont.get()), MAKELPARAM(TRUE, 0));
+    SendMessageW(m_hCancel, WM_SETFONT, reinterpret_cast<WPARAM>(m_hGuiFont.get()), MAKELPARAM(TRUE, 0));
 
     // Update the DPI for our custom child windows.
     m_pFirstPage->UpdateDPI();
@@ -221,14 +215,14 @@ CMainWindow::_OnPaint()
     RECT rcHeaderText = rcHeader;
     rcHeaderText.left = MulDiv(15, m_wCurrentDPI, iWindowsReferenceDPI);
     rcHeaderText.top = MulDiv(15, m_wCurrentDPI, iWindowsReferenceDPI);
-    SelectObject(hMemDC, m_hBoldGuiFont);
+    SelectObject(hMemDC, m_hBoldGuiFont.get());
     DrawTextW(hMemDC, m_pwstrHeader->c_str(), m_pwstrHeader->size(), &rcHeaderText, 0);
 
     // Draw the subheader text.
     RECT rcSubHeaderText = rcHeader;
     rcSubHeaderText.left = MulDiv(20, m_wCurrentDPI, iWindowsReferenceDPI);
     rcSubHeaderText.top = MulDiv(32, m_wCurrentDPI, iWindowsReferenceDPI);
-    SelectObject(hMemDC, m_hGuiFont);
+    SelectObject(hMemDC, m_hGuiFont.get());
     DrawTextW(hMemDC, m_pwstrSubHeader->c_str(), m_pwstrSubHeader->size(), &rcSubHeaderText, 0);
 
     // Draw the logo into the upper right corner.
