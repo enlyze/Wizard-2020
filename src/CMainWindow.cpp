@@ -94,7 +94,7 @@ CMainWindow::_OnCreate()
     m_pLogoBitmap = LoadPNGAsGdiplusBitmap(m_hInstance, IDP_LOGO);
 
     // Create the main GUI font.
-    m_lfGuiFont = { 0 };
+    m_lfGuiFont = {};
     wcscpy_s(m_lfGuiFont.lfFaceName, L"MS Shell Dlg 2");
     m_lfGuiFont.lfHeight = -MulDiv(10, m_wCurrentDPI, iFontReferenceDPI);
     m_hGuiFont = make_unique_font(CreateFontIndirectW(&m_lfGuiFont));
@@ -339,7 +339,7 @@ std::unique_ptr<CMainWindow>
 CMainWindow::Create(HINSTANCE hInstance, int nShowCmd)
 {
     // Register the main window class.
-    WNDCLASSW wc = { 0 };
+    WNDCLASSW wc = {};
     wc.lpfnWndProc = CMainWindow::_WndProc;
     wc.hInstance = hInstance;
     wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);

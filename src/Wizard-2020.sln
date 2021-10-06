@@ -1,9 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.421
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2CB2D7DD-DD8D-47FA-B77E-1CB7B93B6C39}") = "Wizard-2020", "Wizard-2020.vcxproj", "{D60D679D-9B4D-42A3-945C-B01663CF87AB}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Wizard-2020", "Wizard-2020.vcxproj", "{D60D679D-9B4D-42A3-945C-B01663CF87AB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "EnlyzeWinCompatLib", "EnlyzeWinCompatLib\src\EnlyzeWinCompatLib.vcxproj", "{C2C396B8-B585-4F0D-BD37-CF6D4347140F}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libc++", "EnlyzeWinCompatLib\src\libcxx\src\libc++.vcxproj", "{CF14A29C-E25E-4FAF-8C98-2F5006800132}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "winpthreads", "EnlyzeWinCompatLib\src\libcxx\src\winpthreads\src\winpthreads.vcxproj", "{D3FACA21-D165-4B1E-9A06-A9B58964886C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{D60D679D-9B4D-42A3-945C-B01663CF87AB}.Debug|x86.Build.0 = Debug|Win32
 		{D60D679D-9B4D-42A3-945C-B01663CF87AB}.Release|x86.ActiveCfg = Release|Win32
 		{D60D679D-9B4D-42A3-945C-B01663CF87AB}.Release|x86.Build.0 = Release|Win32
+		{C2C396B8-B585-4F0D-BD37-CF6D4347140F}.Debug|x86.ActiveCfg = Debug|Win32
+		{C2C396B8-B585-4F0D-BD37-CF6D4347140F}.Debug|x86.Build.0 = Debug|Win32
+		{C2C396B8-B585-4F0D-BD37-CF6D4347140F}.Release|x86.ActiveCfg = Release|Win32
+		{C2C396B8-B585-4F0D-BD37-CF6D4347140F}.Release|x86.Build.0 = Release|Win32
+		{CF14A29C-E25E-4FAF-8C98-2F5006800132}.Debug|x86.ActiveCfg = Debug|Win32
+		{CF14A29C-E25E-4FAF-8C98-2F5006800132}.Debug|x86.Build.0 = Debug|Win32
+		{CF14A29C-E25E-4FAF-8C98-2F5006800132}.Release|x86.ActiveCfg = Release|Win32
+		{CF14A29C-E25E-4FAF-8C98-2F5006800132}.Release|x86.Build.0 = Release|Win32
+		{D3FACA21-D165-4B1E-9A06-A9B58964886C}.Debug|x86.ActiveCfg = Debug|Win32
+		{D3FACA21-D165-4B1E-9A06-A9B58964886C}.Debug|x86.Build.0 = Debug|Win32
+		{D3FACA21-D165-4B1E-9A06-A9B58964886C}.Release|x86.ActiveCfg = Release|Win32
+		{D3FACA21-D165-4B1E-9A06-A9B58964886C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

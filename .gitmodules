@@ -1,3 +1,6 @@
 [submodule "src/scope-guard"]
 	path = src/scope-guard
 	url = https://github.com/offa/scope-guard
+[submodule "src/EnlyzeWinCompatLib"]
+	path = src/EnlyzeWinCompatLib
+	url = https://github.com/enlyze/EnlyzeWinCompatLib

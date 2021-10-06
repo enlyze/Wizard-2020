@@ -18,7 +18,7 @@ CSecondPage::_OnCreate()
     m_hList = CreateWindowExW(WS_EX_CLIENTEDGE, WC_LISTVIEWW, L"", WS_CHILD | WS_VISIBLE | LVS_REPORT | LVS_SINGLESEL, 0, 0, 0, 0, m_hWnd, nullptr, nullptr, nullptr);
     ListView_SetExtendedListViewStyle(m_hList, LVS_EX_DOUBLEBUFFER | LVS_EX_FULLROWSELECT);
 
-    LVCOLUMNW lvColumn = { 0 };
+    LVCOLUMNW lvColumn = {};
     lvColumn.mask = LVCF_TEXT;
 
     std::wstring wstrColumn = LoadStringAsWstr(m_pMainWindow->GetHInstance(), IDS_COLUMN1);

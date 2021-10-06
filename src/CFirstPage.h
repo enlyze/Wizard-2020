@@ -6,7 +6,7 @@
 
 #pragma once
 
-class CFirstPage : public CPage
+class CFirstPage final : public CPage
 {
 public:
     static std::unique_ptr<CFirstPage> Create(CMainWindow* pMainWindow) { return CPage::Create<CFirstPage>(pMainWindow); }

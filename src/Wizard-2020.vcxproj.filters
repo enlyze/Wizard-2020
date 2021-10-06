@@ -74,5 +74,8 @@
     <Manifest Include="Compatibility.manifest">
       <Filter>Resource Files</Filter>
     </Manifest>
+    <Manifest Include="VisualStyles.manifest">
+      <Filter>Resource Files</Filter>
+    </Manifest>
   </ItemGroup>
 </Project>

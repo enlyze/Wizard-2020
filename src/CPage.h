@@ -23,7 +23,7 @@ protected:
     Create(CMainWindow* pMainWindow)
     {
         // Register the window class.
-        WNDCLASSW wc = { 0 };
+        WNDCLASSW wc = {};
         wc.lpfnWndProc = T::_WndProc;
         wc.hInstance = pMainWindow->GetHInstance();
         wc.hCursor = LoadCursorW(nullptr, IDC_ARROW);
