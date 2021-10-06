@@ -7,6 +7,7 @@
 #include "Wizard-2020.h"
 
 typedef HRESULT (WINAPI *PGetDpiForMonitor)(HMONITOR hmonitor, int dpiType, UINT* dpiX, UINT* dpiY);
+typedef HMONITOR (WINAPI *PMonitorFromWindow)(HWND hwnd, DWORD dwFlags);
 
 #ifndef LOAD_LIBRARY_SEARCH_SYSTEM32
 #define LOAD_LIBRARY_SEARCH_SYSTEM32            0x00000800
@@ -21,9 +22,13 @@ GetWindowDPI(HWND hWnd)
     if (hShcore)
     {
         PGetDpiForMonitor pGetDpiForMonitor = reinterpret_cast<PGetDpiForMonitor>(GetProcAddress(hShcore, "GetDpiForMonitor"));
-        if (pGetDpiForMonitor)
+
+        HMODULE hUser32 = GetModuleHandleW(L"user32");
+        PMonitorFromWindow pMonitorFromWindow = reinterpret_cast<PMonitorFromWindow>(GetProcAddress(hUser32, "MonitorFromWindow"));
+
+        if (pGetDpiForMonitor && pMonitorFromWindow)
         {
-            HMONITOR hMonitor = MonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY);
+            HMONITOR hMonitor = pMonitorFromWindow(hWnd, MONITOR_DEFAULTTOPRIMARY);
             UINT uiDpiX;
             UINT uiDpiY;
             HRESULT hr = pGetDpiForMonitor(hMonitor, 0, &uiDpiX, &uiDpiY);

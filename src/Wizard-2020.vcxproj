@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -68,6 +68,7 @@
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <AdditionalDependencies>$(SolutionDir)\..\build\$(Configuration)\EnlyzeWinCompatLib\bin\EnlyzeWinCompatLib.lib;$(SolutionDir)\..\build\$(Configuration)\libc++\bin\libc++.lib;$(SolutionDir)\..\build\$(Configuration)\winpthreads\bin\winpthreads.lib;comctl32.lib;gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <EnableUAC>false</EnableUAC>
+      <MinimumRequiredVersion>4.0</MinimumRequiredVersion>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest />
@@ -101,6 +102,7 @@
       <AdditionalDependencies>$(SolutionDir)\..\build\$(Configuration)\EnlyzeWinCompatLib\bin\EnlyzeWinCompatLib.lib;$(SolutionDir)\..\build\$(Configuration)\libc++\bin\libc++.lib;$(SolutionDir)\..\build\$(Configuration)\winpthreads\bin\winpthreads.lib;comctl32.lib;gdiplus.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
       <EnableUAC>false</EnableUAC>
+      <MinimumRequiredVersion>4.0</MinimumRequiredVersion>
       <ImageHasSafeExceptionHandlers>false</ImageHasSafeExceptionHandlers>
     </Link>
     <Manifest />
