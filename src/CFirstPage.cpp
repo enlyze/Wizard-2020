@@ -52,12 +52,8 @@ CFirstPage::_OnPaint()
 LRESULT
 CFirstPage::_OnSize()
 {
-    // Get the window size.
-    RECT rcWindow;
-    GetClientRect(m_hWnd, &rcWindow);
-
     // The text is drawn on most of the window, so invalidate that.
-    InvalidateRect(m_hWnd, &rcWindow, FALSE);
+    InvalidateRect(m_hWnd, nullptr, FALSE);
 
     return 0;
 }
